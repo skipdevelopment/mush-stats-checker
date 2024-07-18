@@ -24,6 +24,7 @@ Future<void> main(List<String> arguments) async {
     if(parsedJson["success"] == true) {
       final mushPlayer = MushPlayer.fromJson(parsedJson);
       print("Vendo stats do player: ${username}");
+      line();
       print("Rank: ${mushPlayer.response?.bestTag?.name}");
 
       print("Tags: ");
@@ -144,6 +145,8 @@ Future<void> main(List<String> arguments) async {
         }
       }
 
+      line();
+
       print("Stats do Bedwars:");
       print("Wins: ${mushPlayer.response?.stats?.bedwars?.wins ?? 0}");
       print("Derrotas: ${mushPlayer.response?.stats?.bedwars?.losses ?? 0}");
@@ -157,24 +160,39 @@ Future<void> main(List<String> arguments) async {
       fk is double;
       var fd = mushPlayer.response?.stats?.bedwars!.finalDeaths ?? 0;
       fd is double;
+      
+      var fkdr;
 
-      var fkdr = fk ~/ fd;
+      if(fk == 0 || fd == 0) {
+        fkdr = 0;
+      } else {
+        fkdr = fk ~/ fd;
+      }
 
       print("FKDR: $fkdr");
+      
+      line();
+
+      print("Stats do the bridge:");
+      print("Wins: ${mushPlayer.response?.stats?.duels?.bridgeWins ?? 0}");
+      print("Derrotas: ${mushPlayer.response?.stats?.duels?.bridgeLosses ?? 0}");
+      print("Winstreak: ${mushPlayer.response?.stats?.duels?.bridgeWinstreak ?? 0}");
+      print("Kills: ${mushPlayer.response?.stats?.duels?.bridgeKills ?? 0}");
+      print("Deaths: ${mushPlayer.response?.stats?.duels?.bridgeDeaths ?? 0}");
 
     } else {
       print("Usuário não encontrado.");
     }
-
-
-
-
 
     print("Gostaria de continuar? 1-Sim 2-Não");
     String? stringAnswer = stdin.readLineSync();
      answer = int.parse(stringAnswer!);
   }
 
+}
+
+void line() {
+  print("\n");
 }
 
 class MushPlayer {
